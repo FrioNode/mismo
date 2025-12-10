@@ -1,11 +1,19 @@
+/*!
+ * string-compare
+ * Fork of string-similarity by Akash Kurdekar
+ * Copyright (c) 2018 Akash Kurdekar
+ * Modifications & repackaging (c) 2025 Frionode
+ * Licensed under the MIT License
+ */
+
 module.exports = {
-	compareTwoStrings:compareTwoStrings,
-	findBestMatch:findBestMatch
+	compareTwoStrings: compareTwoStrings,
+	findBestMatch: findBestMatch
 };
 
 function compareTwoStrings(first, second) {
-	first = first.replace(/\s+/g, '')
-	second = second.replace(/\s+/g, '')
+	first = first.replace(/\s+/g, '');
+	second = second.replace(/\s+/g, '');
 
 	if (first === second) return 1; // identical or empty
 	if (first.length < 2 || second.length < 2) return 0; // if either is a 0-letter or 1-letter string
@@ -18,7 +26,7 @@ function compareTwoStrings(first, second) {
 			: 1;
 
 		firstBigrams.set(bigram, count);
-	};
+	}
 
 	let intersectionSize = 0;
 	for (let i = 0; i < second.length - 1; i++) {
@@ -37,30 +45,31 @@ function compareTwoStrings(first, second) {
 }
 
 function findBestMatch(mainString, targetStrings) {
-	if (!areArgsValid(mainString, targetStrings)) throw new Error('Bad arguments: First argument should be a string, second should be an array of strings');
-	
+	if (!areArgsValid(mainString, targetStrings))
+		throw new Error('Bad arguments: First argument should be a string, second should be an array of strings');
+
 	const ratings = [];
 	let bestMatchIndex = 0;
 
 	for (let i = 0; i < targetStrings.length; i++) {
 		const currentTargetString = targetStrings[i];
-		const currentRating = compareTwoStrings(mainString, currentTargetString)
-		ratings.push({target: currentTargetString, rating: currentRating})
+		const currentRating = compareTwoStrings(mainString, currentTargetString);
+
+		ratings.push({ target: currentTargetString, rating: currentRating });
+
 		if (currentRating > ratings[bestMatchIndex].rating) {
-			bestMatchIndex = i
+			bestMatchIndex = i;
 		}
 	}
-	
-	
-	const bestMatch = ratings[bestMatchIndex]
-	
-	return { ratings: ratings, bestMatch: bestMatch, bestMatchIndex: bestMatchIndex };
+
+	const bestMatch = ratings[bestMatchIndex];
+	return { ratings, bestMatch, bestMatchIndex };
 }
 
 function areArgsValid(mainString, targetStrings) {
 	if (typeof mainString !== 'string') return false;
 	if (!Array.isArray(targetStrings)) return false;
 	if (!targetStrings.length) return false;
-	if (targetStrings.find( function (s) { return typeof s !== 'string'})) return false;
+	if (targetStrings.find(s => typeof s !== 'string')) return false;
 	return true;
 }

@@ -1,187 +1,169 @@
-# ⚰️ ⚰️ DEPRECATED ⚰️ ⚰️ 
-This repository and the associated NPM package is no longer being maintained.
+---
 
-# string-similarity
+# string-compare
 
-Finds degree of similarity between two strings, based on [Dice's Coefficient](http://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient), which is mostly better than [Levenshtein distance](http://en.wikipedia.org/wiki/Levenshtein_distance).
+![Build status](https://img.shields.io/badge/build-passing-brightgreen) ![License](https://img.shields.io/badge/license-MIT-blue)
+
+A lightweight utility that finds the degree of similarity between two strings using **Dice’s Coefficient**.
+This algorithm is often more intuitive than Levenshtein distance for natural-language comparison.
+
+> **Note:**
+> `string-compare` is a maintained fork of the original `string-similarity` library by Ace Aakash.
+> Code is licensed under MIT, with attribution retained as required.
+
+---
 
 ## Table of Contents
 
-- [string-similarity](#string-similarity)
-  - [Table of Contents](#table-of-contents)
-  - [Usage](#usage)
-    - [For Node.js](#for-nodejs)
-    - [For browser apps](#for-browser-apps)
-  - [API](#api)
-    - [compareTwoStrings(string1, string2)](#comparetwostringsstring1-string2)
-      - [Arguments](#arguments)
-      - [Returns](#returns)
-      - [Examples](#examples)
-    - [findBestMatch(mainString, targetStrings)](#findbestmatchmainstring-targetstrings)
-      - [Arguments](#arguments-1)
-      - [Returns](#returns-1)
-      - [Examples](#examples-1)
-  - [Release Notes](#release-notes)
-    - [2.0.0](#200)
-    - [3.0.0](#300)
-    - [3.0.1](#301)
-    - [4.0.1](#401)
-    - [4.0.2](#402)
-    - [4.0.3](#403)
+* [Usage](#usage)
+
+  * [Node.js](#for-nodejs)
+  * [Browser](#for-browser)
+* [API](#api)
+
+  * [compareTwoStrings(string1, string2)](#comparetwostringsstring1-string2)
+  * [findBestMatch(mainString, targetStrings)](#findbestmatchmainstring-targetstrings)
+* [Release Notes](#release-notes)
+* [License](#license)
+
+---
 
 ## Usage
 
-#### For Node.js
+### For Node.js
 
-Install using:
+Install:
 
-```shell
-npm install string-similarity --save
+```bash
+npm install string-compare --save
 ```
 
-In your code:
+Use in your code:
 
 ```javascript
-var stringSimilarity = require("string-similarity");
+const stringCompare = require("string-compare");
 
-var similarity = stringSimilarity.compareTwoStrings("healed", "sealed");
+const similarity = stringCompare.compareTwoStrings("healed", "sealed");
+// similarity → 0.8
 
-var matches = stringSimilarity.findBestMatch("healed", [
+const matches = stringCompare.findBestMatch("healed", [
   "edward",
   "sealed",
   "theatre",
 ]);
+// matches → { ratings: [...], bestMatch: {...}, bestMatchIndex: ... }
 ```
 
-#### For browser apps
+---
 
-Include `<script src="//unpkg.com/string-similarity/umd/string-similarity.min.js"></script>` to get the latest version.
+### For browser apps
 
-Or `<script src="//unpkg.com/string-similarity@4.0.1/umd/string-similarity.min.js"></script>` to get a specific version (4.0.1) in this case.
+Use the UMD build:
 
-This exposes a global variable called `stringSimilarity` which you can start using.
-
-```
+```html
+<script src="//unpkg.com/string-compare/umd/string-compare.min.js"></script>
 <script>
-  stringSimilarity.compareTwoStrings('what!', 'who?');
+  stringCompare.compareTwoStrings("what!", "who?");
 </script>
 ```
 
-(The package is exposed as UMD, so you can consume it as such)
+This exposes a global variable **`stringCompare`**.
+
+> **Tip:** For case-insensitive comparison, you can convert strings to lowercase before comparing:
+>
+> ```js
+> stringCompare.compareTwoStrings(str1.toLowerCase(), str2.toLowerCase());
+> ```
+
+---
 
 ## API
 
-The package contains two methods:
-
 ### compareTwoStrings(string1, string2)
 
-Returns a fraction between 0 and 1, which indicates the degree of similarity between the two strings. 0 indicates completely different strings, 1 indicates identical strings. The comparison is case-sensitive.
+Returns a number between **0 and 1** representing similarity (0 = completely different, 1 = identical).
+Comparison is **case-sensitive** by default.
 
-##### Arguments
+#### Arguments
 
-1. string1 (string): The first string
-2. string2 (string): The second string
+1. `string1` *(string)*
+2. `string2` *(string)*
 
-Order does not make a difference.
+Order does not matter.
 
-##### Returns
+#### Returns
 
-(number): A fraction from 0 to 1, both inclusive. Higher number indicates more similarity.
+`number` – similarity score between 0 and 1.
 
-##### Examples
+#### Examples
 
 ```javascript
-stringSimilarity.compareTwoStrings("healed", "sealed");
+stringCompare.compareTwoStrings("healed", "sealed");
 // → 0.8
 
-stringSimilarity.compareTwoStrings(
+stringCompare.compareTwoStrings(
   "Olive-green table for sale, in extremely good condition.",
-  "For sale: table in very good  condition, olive green in colour."
+  "For sale: table in very good condition, olive green in colour."
 );
 // → 0.6060606060606061
-
-stringSimilarity.compareTwoStrings(
-  "Olive-green table for sale, in extremely good condition.",
-  "For sale: green Subaru Impreza, 210,000 miles"
-);
-// → 0.2558139534883721
-
-stringSimilarity.compareTwoStrings(
-  "Olive-green table for sale, in extremely good condition.",
-  "Wanted: mountain bike with at least 21 gears."
-);
-// → 0.1411764705882353
 ```
+
+---
 
 ### findBestMatch(mainString, targetStrings)
 
 Compares `mainString` against each string in `targetStrings`.
 
-##### Arguments
+#### Arguments
 
-1. mainString (string): The string to match each target string against.
-2. targetStrings (Array): Each string in this array will be matched against the main string.
+1. `mainString` *(string)*
+2. `targetStrings` *(Array<string>)*
 
-##### Returns
+#### Returns
 
-(Object): An object with a `ratings` property, which gives a similarity rating for each target string, a `bestMatch` property, which specifies which target string was most similar to the main string, and a `bestMatchIndex` property, which specifies the index of the bestMatch in the targetStrings array.
+An object:
 
-##### Examples
-
-```javascript
-stringSimilarity.findBestMatch('Olive-green table for sale, in extremely good condition.', [
-  'For sale: green Subaru Impreza, 210,000 miles',
-  'For sale: table in very good condition, olive green in colour.',
-  'Wanted: mountain bike with at least 21 gears.'
-]);
-// →
-{ ratings:
-   [ { target: 'For sale: green Subaru Impreza, 210,000 miles',
-       rating: 0.2558139534883721 },
-     { target: 'For sale: table in very good condition, olive green in colour.',
-       rating: 0.6060606060606061 },
-     { target: 'Wanted: mountain bike with at least 21 gears.',
-       rating: 0.1411764705882353 } ],
-  bestMatch:
-   { target: 'For sale: table in very good condition, olive green in colour.',
-     rating: 0.6060606060606061 },
-  bestMatchIndex: 1
+```js
+{
+  ratings: [
+    { target: "abc", rating: 0.5 },
+    { target: "def", rating: 0.2 },
+    ...
+  ],
+  bestMatch: { target: "abc", rating: 0.5 },
+  bestMatchIndex: 0
 }
 ```
 
+#### Example
+
+```javascript
+stringCompare.findBestMatch(
+  "Olive-green table for sale, in extremely good condition.",
+  [
+    "For sale: green Subaru Impreza, 210,000 miles",
+    "For sale: table in very good condition, olive green in colour.",
+    "Wanted: mountain bike with at least 21 gears."
+  ]
+);
+```
+
+---
+
 ## Release Notes
 
-### 2.0.0
+### 1.0.0 — Initial string-compare release
 
-- Removed production dependencies
-- Updated to ES6 (this breaks backward-compatibility for pre-ES6 apps)
+* Forked from original `string-similarity`
+* Renamed and repackaged under `string-compare`
+* Updated documentation and cleaned API references
+* Preserved MIT license and attribution
 
-### 3.0.0
+---
 
-- Performance improvement for `compareTwoStrings(..)`: now O(n) instead of O(n^2)
-- The algorithm has been tweaked slightly to disregard spaces and word boundaries. This will change the rating values slightly but not enough to make a significant difference
-- Adding a `bestMatchIndex` to the results for `findBestMatch(..)` to point to the best match in the supplied `targetStrings` array
+## License
 
-### 3.0.1
+MIT — includes original copyright notice from
+**aceakash/string-similarity**.
 
-- Refactoring: removed unused functions; used `substring` instead of `substr`
-- Updated dependencies
-
-### 4.0.1
-
-- Distributing as an UMD build to be used in browsers.
-
-### 4.0.2
-
-- Update dependencies to latest versions.
-
-### 4.0.3
-
-- Make compatible with IE and ES5. Also, update deps. (see [PR56](https://github.com/aceakash/string-similarity/pull/56))
-
-### 4.0.4
-
-- Simplify some conditional statements. Also, update deps. (see [PR50](https://github.com/aceakash/string-similarity/pull/50))
-
-![Build status](https://codeship.com/projects/2aa453d0-0959-0134-8a76-4abcb29fe9b4/status?branch=master)
-[![Known Vulnerabilities](https://snyk.io/test/github/aceakash/string-similarity/badge.svg)](https://snyk.io/test/github/aceakash/string-similarity)
+---

@@ -5,8 +5,9 @@ module.exports = {
   mode: 'production',
   output: {
     path: path.resolve(__dirname, 'umd'),
-    filename: 'string-similarity.min.js',
-    library: 'stringSimilarity',
-    libraryTarget: 'umd'
-  },
+    filename: 'string-compare.min.js',
+    library: 'stringCompare',
+    libraryTarget: 'umd',
+    globalObject: "this"
+  }
 };

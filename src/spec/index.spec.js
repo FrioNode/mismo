@@ -1,7 +1,7 @@
-var stringSimilarity = require('../index');
+var stringCompare = require('../index');
 
 describe('compareTwoStrings', function () {
-  var compareTwoStrings = stringSimilarity.compareTwoStrings;
+  var compareTwoStrings = stringCompare.compareTwoStrings;
 
   it('is a function', function () {
     expect(typeof compareTwoStrings).toEqual('function');
@@ -35,7 +35,7 @@ describe('compareTwoStrings', function () {
 });
 
 describe('findBestMatch', function () {
-  var findBestMatch = stringSimilarity.findBestMatch;
+  var findBestMatch = stringCompare.findBestMatch;
   var badArgsErrorMsg = 'Bad arguments: First argument should be a string, second should be an array of strings';
 
   it('is a function', function () {

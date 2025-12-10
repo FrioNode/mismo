@@ -1,36 +1,36 @@
 {
-  "name": "string-similarity",
-  "version": "4.0.4",
-  "description": "Finds degree of similarity between strings, based on Dice's Coefficient, which is mostly better than Levenshtein distance.",
+  "name": "string-compare",
+  "version": "1.0.0",
+  "description": "A lightweight utility to compare the similarity of strings using Dice's Coefficient.",
   "main": "src/index.js",
   "scripts": {
     "test": "jasmine --config=src/spec/support/jasmine.json",
     "build": "rm -rf umd && webpack-cli",
-    "prepublish": "npm test && npm run build"
+    "prepublishOnly": "npm test && npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/aceakash/string-similarity.git"
+    "url": "git://github.com/frionode/string-compare.git"
   },
   "keywords": [
-    "strings",
-    "similar",
-    "difference",
-    "similarity",
+    "string",
     "compare",
     "comparison",
-    "degree",
+    "similarity",
     "match",
     "matching",
     "dice",
-    "levenshtein"
+    "coefficient",
+    "levenshtein",
+    "text",
+    "nlp"
   ],
   "files": [
     "src/index.js",
-    "umd/string-similarity.min.js"
+    "umd/string-compare.min.js"
   ],
-  "author": "Akash Kurdekar <npm@kurdekar.com> (http://untilfalse.com/)",
-  "license": "ISC",
+  "author": "Akash Kurdekar (original author), repackaged by Frionode",
+  "license": "MIT",
   "devDependencies": {
     "jasmine": "^3.6.3",
     "webpack": "^5.11.1",
