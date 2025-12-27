@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jasmine --config=src/spec/support/jasmine.json",
-    "build": "rm -rf umd && webpack-cli",
+    "build": "rm -rf umd && npx webpack-cli",
     "prepublishOnly": "npm test && npm run build"
   },
   "repository": {
@@ -27,7 +27,7 @@
   ],
   "files": [
     "src/index.js",
-    "umd/string-compare.min.js"
+    "umd/mismo.min.js"
   ],
   "author": "Akash Kurdekar (original author), repackaged by Frionode",
   "license": "MIT",
