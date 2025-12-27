@@ -1,5 +1,5 @@
 {
-  "name": "string-compare",
+  "name": "mismo",
   "version": "1.0.0",
   "description": "A lightweight utility to compare the similarity of strings using Dice's Coefficient.",
   "main": "src/index.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/frionode/string-compare.git"
+    "url": "git://github.com/frionode/mismo.git"
   },
   "keywords": [
     "string",

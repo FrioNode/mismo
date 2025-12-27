@@ -1,6 +1,6 @@
 ---
 
-# string-compare
+# mismo
 
 ![Build status](https://img.shields.io/badge/build-passing-brightgreen) ![License](https://img.shields.io/badge/license-MIT-blue)
 
@@ -8,7 +8,7 @@ A lightweight utility that finds the degree of similarity between two strings us
 This algorithm is often more intuitive than Levenshtein distance for natural-language comparison.
 
 > **Note:**
-> `string-compare` is a maintained fork of the original `string-similarity` library by Ace Aakash.
+> `mismo` is a maintained fork of the original `string-similarity` library by Ace Aakash.
 > Code is licensed under MIT, with attribution retained as required.
 
 ---
@@ -35,13 +35,13 @@ This algorithm is often more intuitive than Levenshtein distance for natural-lan
 Install:
 
 ```bash
-npm install string-compare --save
+npm install mismo --save
 ```
 
 Use in your code:
 
 ```javascript
-const stringCompare = require("string-compare");
+const stringCompare = require("mismo");
 
 const similarity = stringCompare.compareTwoStrings("healed", "sealed");
 // similarity → 0.8
@@ -61,7 +61,7 @@ const matches = stringCompare.findBestMatch("healed", [
 Use the UMD build:
 
 ```html
-<script src="//unpkg.com/string-compare/umd/string-compare.min.js"></script>
+<script src="//unpkg.com/mismo/umd/mismo.min.js"></script>
 <script>
   stringCompare.compareTwoStrings("what!", "who?");
 </script>
@@ -152,10 +152,10 @@ stringCompare.findBestMatch(
 
 ## Release Notes
 
-### 1.0.0 — Initial string-compare release
+### 1.0.0 — Initial mismo release
 
 * Forked from original `string-similarity`
-* Renamed and repackaged under `string-compare`
+* Renamed and repackaged under `mismo`
 * Updated documentation and cleaned API references
 * Preserved MIT license and attribution
 

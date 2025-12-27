@@ -5,8 +5,8 @@ module.exports = {
   mode: 'production',
   output: {
     path: path.resolve(__dirname, 'umd'),
-    filename: 'string-compare.min.js',
-    library: 'stringCompare',
+    filename: 'mismo.min.js',
+    library: 'mismo',
     libraryTarget: 'umd',
     globalObject: "this"
   }
